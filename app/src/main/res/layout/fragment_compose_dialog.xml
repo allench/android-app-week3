@@ -1,0 +1,70 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_compose"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
+    android:paddingTop="5dp">
+
+    <ImageView
+        android:id="@+id/ivComposeLogo"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_margin="5dp"
+        android:background="@android:color/darker_gray" />
+
+    <TextView
+        android:id="@+id/tvComposeUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivComposeLogo"
+        android:layout_toRightOf="@+id/ivComposeLogo"
+        android:paddingRight="5dp"
+        android:singleLine="true"
+        android:text="{UserName}"
+        android:textColor="#222222"
+        android:textSize="14sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/tvComposeUserId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/ivComposeLogo"
+        android:layout_alignLeft="@id/tvComposeUserName"
+        android:layout_toRightOf="@id/ivComposeLogo"
+        android:paddingRight="5dp"
+        android:singleLine="true"
+        android:text="{@UserId}"
+        android:textColor="#777777"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tvComposeCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/ivComposeLogo"
+        android:layout_alignRight="@+id/etComposeDescription"
+        android:layout_toRightOf="@id/tvComposeUserName"
+        android:gravity="end"
+        android:paddingRight="5dp"
+        android:singleLine="true"
+        android:text="{140}"
+        android:textColor="#777777"
+        android:textSize="13sp" />
+
+    <EditText
+        android:id="@+id/etComposeDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ivComposeLogo"
+        android:layout_alignStart="@+id/ivComposeLogo"
+        android:layout_below="@id/ivComposeLogo"
+        android:ems="12"
+        android:inputType="textMultiLine|textNoSuggestions"
+        android:maxLength="140" />
+
+</RelativeLayout>
