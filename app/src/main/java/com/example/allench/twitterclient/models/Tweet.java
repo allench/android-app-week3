@@ -1,5 +1,9 @@
 package com.example.allench.twitterclient.models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -391,14 +395,22 @@ import java.util.Locale;
   "lang": "zh"
 }
 */
-public class Tweet {
+@Table(name = "Tweet")
+public class Tweet extends Model {
+    @Column(name = "tid")
     public long id;
+    @Column(name = "text")
     public String text;
+    @Column(name = "created_at")
     public String created_at;
-    public User user;
-    public ArrayList<Media> medias;
+    @Column(name = "retweet_count")
     public int retweet_count;
+    @Column(name = "favourites_count")
     public int favourites_count;
+    @Column(name = "user")
+    public User user;
+    @Column(name = "medias")
+    public ArrayList<Media> medias;
 
     private static String getRelativeDateTimeString(String createdAt) {
         String result = "";
@@ -420,9 +432,9 @@ public class Tweet {
             tweet.text = json.getString("text");
             tweet.created_at = getRelativeDateTimeString(json.getString("created_at"));
             tweet.user = User.fromJSON(json.getJSONObject("user"));
-            tweet.medias = Media.fromJSONArray(json.getJSONObject("entities").getJSONArray("media"));
-            tweet.retweet_count = json.getInt("retweet_count");
-            tweet.favourites_count = json.getInt("favourites_count");
+            tweet.medias = Media.fromJSONArray(json.getJSONObject("entities").optJSONArray("media"));
+            tweet.retweet_count = json.optInt("retweet_count", 0);
+            tweet.favourites_count = json.optInt("favourites_count", 0);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -432,18 +444,21 @@ public class Tweet {
     public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray) {
         ArrayList<Tweet> tweets = new ArrayList<>();
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                Tweet tweet = Tweet.fromJSON(jsonArray.getJSONObject(i));
-                if (tweet != null) {
-                    tweets.add(tweet);
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    Tweet tweet = Tweet.fromJSON(jsonArray.getJSONObject(i));
+                    if (tweet != null) {
+                        tweets.add(tweet);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    continue;
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                continue;
             }
         }
 
         return tweets;
     }
+
 }

@@ -1,5 +1,9 @@
 package com.example.allench.twitterclient.models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -44,9 +48,13 @@ import java.util.ArrayList;
   }
 }
 */
-public class Media {
+@Table(name = "Media")
+public class Media extends Model {
+    @Column(name = "type")
     public String type;
+    @Column(name = "media_url")
     public String media_url;
+    @Column(name = "display_url")
     public String display_url;
 
     public static Media fromJSON(JSONObject json) {
@@ -65,15 +73,17 @@ public class Media {
     public static ArrayList<Media> fromJSONArray(JSONArray jsonArray) {
         ArrayList<Media> medias = new ArrayList<>();
 
-        for (int i = 0; i < jsonArray.length(); i++) {
-            try {
-                Media media = Media.fromJSON(jsonArray.getJSONObject(i));
-                if (media != null) {
-                    medias.add(media);
+        if (jsonArray != null) {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                try {
+                    Media media = Media.fromJSON(jsonArray.getJSONObject(i));
+                    if (media != null) {
+                        medias.add(media);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    continue;
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-                continue;
             }
         }
 

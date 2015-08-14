@@ -1,5 +1,9 @@
 package com.example.allench.twitterclient.models;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -81,9 +85,13 @@ import org.json.JSONObject;
 }
 */
 
-public class User {
+@Table(name = "User")
+public class User extends Model {
+    @Column(name = "userid")
     public String userid;
+    @Column(name = "username")
     public String username;
+    @Column(name = "profile_image_url")
     public String profile_image_url;
 
     public static User fromJSON(JSONObject json) {
